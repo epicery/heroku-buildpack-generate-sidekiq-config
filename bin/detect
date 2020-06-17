@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Always execute the buildpack as we will declare the worker process
+# for background jobs in the "release" file.
+echo "GenerateSidekiqConfig 1.0";
+exit 0

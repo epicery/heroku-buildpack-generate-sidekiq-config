@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cat << EOF
+---
+default_process_types:
+  worker: bundle exec sidekiq -C ./.heroku/sidekiq.yml -v -e production
+EOF

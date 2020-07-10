@@ -2,11 +2,24 @@
 
 # change the current working directory to BUILD_DIR
 # see: https://devcenter.heroku.com/articles/buildpack-api#bin-compile
-cd $1
+BUILD_DIR=$1
+ENV_DIR=$3
+
+cd $BUILD_DIR
 
 indent() {
   sed -u 's/^/       /'
 }
+
+# Ensure the app's environment is loaded so that
+# the rake task will get executed in "production".
+# This requires the presence of RAILS_ENV="production"
+# in the settings of said app.
+if [ -d $ENV_DIR ]; then
+  for e in $(ls $ENV_DIR); do
+    export "$e=$(cat $ENV_DIR/$e)"
+  done
+fi
 
 TASK="heroku:generate-sidekiq-config"
 
